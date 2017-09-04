@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.revature.shared.dto.response.Video;
-
 /**
  * The persistent class for the curriculum_act_refs database table.
  * 

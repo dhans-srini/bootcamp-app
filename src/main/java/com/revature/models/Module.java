@@ -18,11 +18,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.revature.revtek.rest.utils.JsonDateDeserializer24Hrs;
-import com.revature.revtek.rest.utils.JsonDateSerializer24Hrs;
-import com.revature.shared.models.Employee;
-import com.revature.shared.models.Organization;
-import com.revature.shared.utils.LocalDateAttributeConverter;
+import com.revature.utils.JsonDateDeserializer24Hrs;
+import com.revature.utils.JsonDateSerializer24Hrs;
+import com.revature.utils.LocalDateAttributeConverter;
 
 /**
  * The persistent class for the modules database table.

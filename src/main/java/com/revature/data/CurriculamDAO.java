@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.revature.data.access.DataModifier;
 import com.revature.data.access.DataRetriever;
 import com.revature.data.access.exception.DataAccessException;
-import com.revature.models.Curriculam;
+import com.revature.models.Curriculum;
 
 @Repository
 public class CurriculamDAO {
@@ -19,8 +19,7 @@ public class CurriculamDAO {
 
   public void saveCurriculam() {
     try {
-      Curriculam c = new Curriculam();
-      c.setName("test");
+      Curriculum c = new Curriculum();
 
       dataModifier.insert(c);
     } catch (DataAccessException e) {

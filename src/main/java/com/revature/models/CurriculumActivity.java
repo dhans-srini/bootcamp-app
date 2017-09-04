@@ -13,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.revature.shared.dto.response.Video;
-import com.revature.shared.models.Assessment;
-
 /**
  * The persistent class for the curriculum_activities database table.
  * 
