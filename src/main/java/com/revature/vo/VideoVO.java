@@ -7,11 +7,11 @@ import com.revature.utils.TypeConversionUtil;
  * Created on 05/09/2017
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class QuizVO {
+public class VideoVO {
   private Long id;
   private String title;
 
-  public QuizVO() {
+  public VideoVO() {
     // Default constructor
   }
 
@@ -39,10 +39,10 @@ public class QuizVO {
   // ------------------- equals customized here
   @Override
   public boolean equals(Object obj) {
-    if (obj == null || !(obj instanceof QuizVO))
+    if (obj == null || !(obj instanceof VideoVO))
       return false;
 
-    QuizVO that = (QuizVO) obj;
+    VideoVO that = (VideoVO) obj;
     return this.id == null ? false : this.id.equals(that.getId());
   }
 }

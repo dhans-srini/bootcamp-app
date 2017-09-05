@@ -8,6 +8,7 @@ package com.revature.utils;
 public class RestURIConstants {
 
   public static final String GET_QUIZZES = "/quizzes";
+  public static final String GET_VIDEOS = "/videos";
 
   private RestURIConstants() {
     // empty constructor
