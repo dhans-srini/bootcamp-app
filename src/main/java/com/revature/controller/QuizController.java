@@ -29,13 +29,9 @@ public class QuizController {
   private QuizService quizService;
 
   /**
-   * This method is used to get the all question with answer option for dashboard assessment by
-   * assessment id.
+   * To get active quizzes
    * 
-   * @param quizId
-   * @param request
-   * @param flag
-   * @return serviceResponse
+   * @return {@link ResponseEntity}
    */
   @RequestMapping(value = RestURIConstants.GET_QUIZZES, method = RequestMethod.GET)
   public ResponseEntity<HttpStatusResponse> getQuizzes() {
