@@ -1,10 +1,9 @@
 package com.revature.models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,11 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.revature.utils.JsonDateDeserializer24Hrs;
-import com.revature.utils.JsonDateSerializer24Hrs;
-import com.revature.utils.LocalDateAttributeConverter;
 
 /**
  * The persistent class for the curriculum_histories database table.
@@ -32,7 +26,7 @@ public class CurriculumHistory implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID")
   private Long id;
 
@@ -46,11 +40,8 @@ public class CurriculumHistory implements Serializable {
   @JoinColumn(name = "updated_by")
   private Employee updatedBy;
 
-  @Convert(converter = LocalDateAttributeConverter.class)
-  @JsonSerialize(using = JsonDateSerializer24Hrs.class)
-  @JsonDeserialize(using = JsonDateDeserializer24Hrs.class)
   @Column(name = "updated_on")
-  private LocalDateTime updatedOn;
+  private Date updatedOn;
 
   // ----------------------------- Constructor
   public CurriculumHistory() {
@@ -83,11 +74,11 @@ public class CurriculumHistory implements Serializable {
     this.updatedBy = updatedBy;
   }
 
-  public LocalDateTime getUpdatedOn() {
+  public Date getUpdatedOn() {
     return updatedOn;
   }
 
-  public void setUpdatedOn(LocalDateTime updatedOn) {
+  public void setUpdatedOn(Date updatedOn) {
     this.updatedOn = updatedOn;
   }
 

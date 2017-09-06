@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.revature.data.CurriculamDAO;
+import com.revature.data.CurriculumDAO;
 import com.revature.data.access.DataModifier;
 import com.revature.data.access.DataRetriever;
 import com.revature.data.access.QueryParameter;
@@ -18,7 +18,7 @@ import com.revature.models.Curriculum;
 import com.revature.vo.CurriculumVO;
 
 @Repository
-public class CurriculumDAOImpl implements CurriculamDAO {
+public class CurriculumDAOImpl implements CurriculumDAO {
   private static final String DATA_RETRIEVAL_FAILED = "Data Retrieval Failed";
   
   private static Logger log = Logger.getLogger(CurriculumDAOImpl.class);
