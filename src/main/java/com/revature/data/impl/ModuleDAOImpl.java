@@ -9,11 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.data.ModuleDAO;
 import com.revature.data.exception.DataServiceException;
+import com.revature.models.CurriculumModuleActivity;
 import com.revature.models.Module;
 import com.revature.data.utils.DataUtils;
 import com.revature.data.access.DataModifier;
 import com.revature.data.access.DataRetriever;
+import com.revature.data.access.QueryParameter;
 import com.revature.data.access.exception.DataAccessException;
+import com.revature.data.access.exception.DuplicateRecordException;
 
 /**
  * This class is used to perform the data layer implementation for module
@@ -52,16 +55,50 @@ public class ModuleDAOImpl implements ModuleDAO {
 
 	@Override
 	public void addModule(Module module) throws DataServiceException {
-	try{
-		logger.info("Adding new module");
-		dataModifier.insert(module);
-		logger.debug("Module added successfully");
+		try {
+			logger.info("Adding new module");
+			dataModifier.insert(module);
+			logger.debug(String.format("Module saved with id : %s and created by : %s", module.getId(),
+					module.getCreatedBy().getFullName()));
+			logger.info(String.format("Module saved successfully, with id : %s", module.getId()));
+		} catch (DataAccessException e) {
+			logger.error("Module addition failed", e);
+			throw new DataServiceException(DataUtils.getInstance().getPropertyFileValue("msg.data.insert.fail"), e);
+		}
+
 	}
-	catch (DataAccessException e) {
-		logger.error("Module addition failed", e);
-		throw new DataServiceException(DataUtils.getInstance().getPropertyFileValue("msg.data.insert.fail"), e);
+
+		@Override
+	public void deleteModule(Module module) throws DataServiceException {
+		try {
+			logger.info("Deleting module");
+			dataModifier.delete(module);
+			logger.debug("Module deleted successfully");
+			CurriculumModuleActivity curModAct = new CurriculumModuleActivity();
+			dataModifier.delete(curModAct);
+			logger.debug("Module activity deleted successfully");
+		} catch (DataAccessException e) {
+			logger.error(String.format("Module id =%d has some dependency so it cannot be deleted", module.getId()), e);
+			throw new DataServiceException(
+					DataUtils.getInstance().getPropertyFileValue("msg.data.curriculum.module.dependency"), e);
+		} catch (Exception e) {
+			logger.error(String.format("Module with id=%d deletion failed", module.getId()), e);
+			throw new DataServiceException(DataUtils.getInstance().getPropertyFileValue("msg.data.delete.fail"), e);
+		}
 	}
-		
+
+	@Override
+	public void updateModuleStatus(Long moduleId, Boolean isActive) throws DataServiceException {
+		try {
+			logger.info("Updating Module status");
+			List<QueryParameter<?>> queryParam = new ArrayList<>();
+			queryParam.add(new QueryParameter<>("activeValue", isActive));
+			queryParam.add(new QueryParameter<>("moduleId", moduleId));
+			dataModifier.executeQuery("UPDATE Module SET isActive=:activeValue WHERE id=:moduleId", queryParam);
+		} catch (DataAccessException e) {
+			logger.error(String.format("Module with id : %d status updation failed.", moduleId), e);
+			throw new DataServiceException(DataUtils.getInstance().getPropertyFileValue("msg.data.update.fail"), e);
+		}
 	}
 
 }

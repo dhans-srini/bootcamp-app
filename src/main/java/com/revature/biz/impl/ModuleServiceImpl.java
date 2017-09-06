@@ -48,4 +48,32 @@ public class ModuleServiceImpl implements ModuleService {
 
 	}
 
+	
+
+	@Override
+	public void doDeleteModule(Module module) throws BusinessServiceException {
+		try {
+			logger.info("Deleting the module");
+			moduleDAO.deleteModule(module);
+			logger.debug("Module deleted successfully");
+		} catch (DataServiceException e) {
+			logger.error("Failed to delete the module");
+			throw new BusinessServiceException(e.getMessage(), e);
+		}
+
+	}
+
+	@Override
+	public void doUpdateModuleStatus(Long moduleId, Boolean isActive) throws BusinessServiceException {
+		try {
+			logger.info("Updating the module status");
+			moduleDAO.updateModuleStatus(moduleId, isActive);
+			logger.debug("Module status updated successfully");
+		} catch (DataServiceException e) {
+			logger.error("Failed to update the module status");
+			throw new BusinessServiceException(e.getMessage(), e);
+		}
+		
+	}
+
 }

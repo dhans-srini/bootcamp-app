@@ -9,4 +9,12 @@ public interface ModuleDAO {
 	List<Module> getAllModules() throws DataServiceException;
 
 	void addModule(Module module) throws DataServiceException;
+
+	
+
+	void deleteModule(Module module) throws DataServiceException;
+
+	void updateModuleStatus(Long moduleId,Boolean isActive) throws DataServiceException;
+	
+	
 }
