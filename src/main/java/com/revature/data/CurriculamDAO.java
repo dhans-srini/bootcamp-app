@@ -1,29 +1,16 @@
 package com.revature.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-import com.revature.data.access.DataModifier;
-import com.revature.data.access.DataRetriever;
-import com.revature.data.access.exception.DataAccessException;
-import com.revature.models.Curriculum;
+import com.revature.data.exception.DataServiceException;
+import com.revature.vo.CurriculumVO;
 
-@Repository
-public class CurriculamDAO {
+public interface CurriculamDAO {
+  
+  void saveCurriculam();
 
-  @Autowired
-  private DataRetriever dataRetriever;
+  List<CurriculumVO> getCurriculums() throws DataServiceException;
 
-  @Autowired
-  private DataModifier dataModifier;
+  void updateCurriculumStatus(Long curriculumId,boolean status)throws DataServiceException;
 
-  public void saveCurriculam() {
-    try {
-      Curriculum c = new Curriculum();
-
-      dataModifier.insert(c);
-    } catch (DataAccessException e) {
-      e.printStackTrace();
-    }
-  }
 }
