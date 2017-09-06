@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.revature.data.exception.DataServiceException;
 import com.revature.models.CurriculumSection;
+import com.revature.vo.CurriculumSectionVO;
 
 /**
  * This method contains Curriculum Section related DAO's
@@ -15,10 +16,10 @@ public interface CurriculumSectionDAO {
 	/**
 	 * Get all Curriculum Sections
 	 * 
-	 * @return List of CurriculumSection
+	 * @return List of CurriculumSectionVO
 	 * @throws DataServiceException
 	 */
-	List<CurriculumSection> doGetAllCurriculumSections() throws DataServiceException;
+	List<CurriculumSectionVO> doGetAllCurriculumSections() throws DataServiceException;
 
 	/**
 	 * Insert new Curriculum Section
@@ -48,18 +49,26 @@ public interface CurriculumSectionDAO {
 	 * Get all Curriculum Sections By Id
 	 * 
 	 * @param id
-	 * @return List of CurriculumSection
+	 * @return List of CurriculumSectionVO
 	 * @throws DataServiceException
 	 */
-	List<CurriculumSection> doGetCurriculumSectionById(Long id) throws DataServiceException;
+	List<CurriculumSectionVO> doGetCurriculumSectionById(Long id) throws DataServiceException;
 
 	/**
 	 * Get all Curriculum Sections By Curriculum Id
 	 * 
 	 * @param curriculumId
-	 * @return List of CurriculumSection
+	 * @return List of CurriculumSectionVO
 	 * @throws DataServiceException
 	 */
-	List<CurriculumSection> doGetCurriculumSectionByCurriculumId(Long curriculumId) throws DataServiceException;
+	List<CurriculumSectionVO> doGetCurriculumSectionByCurriculumId(Long curriculumId) throws DataServiceException;
+
+	/**
+	 * Updates display order of the Curriculum Section based on id
+	 * 
+	 * @param curriculumSection
+	 * @throws DataServiceException
+	 */
+	void doUpdateCurriculumSectionDisplayOrder(CurriculumSection curriculumSection) throws DataServiceException;
 
 }

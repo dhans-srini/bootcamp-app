@@ -14,32 +14,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.biz.CurriculumSectionService;
+import com.revature.biz.CurriculumSectionContentService;
 import com.revature.biz.exception.BusinessServiceException;
-import com.revature.models.CurriculumSection;
-import com.revature.utils.ServiceConstants;
-import com.revature.utils.ServiceResponseUtils;
+import com.revature.models.CurriculumSectionContent;
 import com.revature.vo.HttpStatusResponse;
-import com.revature.vo.ServiceResponse;
 
 @RestController
-@RequestMapping("/curriculum/section")
-public class CurriculumSectionController {
-	private static final Logger logger = Logger.getLogger(CurriculumSectionController.class);
+@RequestMapping("/curriculum/section/content")
+public class CurriculumSectionContentController {
+	private static final Logger logger = Logger.getLogger(CurriculumSectionContentController.class);
 	@Autowired
-	public CurriculumSectionService curriculumSectionService;
+	public CurriculumSectionContentService curriculumSectionContentService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<HttpStatusResponse> getAllCurriculumSections() {
+	public ResponseEntity<HttpStatusResponse> getAllCurriculumSectionContents() {
 		HttpStatusResponse response = new HttpStatusResponse();
-		ServiceResponse serviceResponse=new ServiceResponse();
-		List<CurriculumSection> curriculumSections = new ArrayList<>();
+		List<CurriculumSectionContent> curriculumSectionContents = new ArrayList<>();
 		try {
-			curriculumSections = curriculumSectionService.doGetAllCurriculumSections();
-			if (CollectionUtils.isNotEmpty(curriculumSections)) {
+			curriculumSectionContents = curriculumSectionContentService.doGetAllCurriculumSectionContents();
+			if (CollectionUtils.isNotEmpty(curriculumSectionContents)) {
 				response.setStatusCode(HttpStatus.OK.value());
-				response.setDescription("Curriculum Sections Retrieved Successfully");
-				response.setData(curriculumSections);
+				response.setDescription("Curriculum Section Contents Retrieved Successfully");
+				response.setData(curriculumSectionContents);
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			} else {
 				response.setStatusCode(HttpStatus.NO_CONTENT.value());
@@ -51,19 +47,18 @@ public class CurriculumSectionController {
 			logger.error(e.getMessage(), e);
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<HttpStatusResponse> getCurriculumSectionById(@PathVariable("id") Long id) {
+	public ResponseEntity<HttpStatusResponse> getAllCurriculumSectionContentsById(@PathVariable("id") Long id) {
 		HttpStatusResponse response = new HttpStatusResponse();
-		List<CurriculumSection> curriculumSections = new ArrayList<>();
+		List<CurriculumSectionContent> curriculumSectionContents = new ArrayList<>();
 		try {
-			curriculumSections = curriculumSectionService.doGetCurriculumSectionById(id);
-			if (CollectionUtils.isNotEmpty(curriculumSections)) {
+			curriculumSectionContents = curriculumSectionContentService.doGetCurriculumSectionContentById(id);
+			if (CollectionUtils.isNotEmpty(curriculumSectionContents)) {
 				response.setStatusCode(HttpStatus.OK.value());
-				response.setDescription("Curriculum Sections Retrieved Successfully");
-				response.setData(curriculumSections);
+				response.setDescription("Curriculum Section Contents Retrieved Successfully");
+				response.setData(curriculumSectionContents);
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			} else {
 				response.setStatusCode(HttpStatus.NO_CONTENT.value());
@@ -75,33 +70,32 @@ public class CurriculumSectionController {
 			logger.error(e.getMessage(), e);
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ResponseEntity<HttpStatusResponse> saveCurriculumSection(@RequestBody CurriculumSection curriculumSection) {
+	public ResponseEntity<HttpStatusResponse> saveCurriculumSectionContent(
+			@RequestBody CurriculumSectionContent curriculumSectionContent) {
 		HttpStatusResponse response = new HttpStatusResponse();
 		try {
-			curriculumSectionService.doSaveCurriculumSection(curriculumSection);
+			curriculumSectionContentService.doSaveCurriculumSectionContent(curriculumSectionContent);
 			response.setStatusCode(HttpStatus.OK.value());
-			response.setDescription("Curriculum Section Saved Successfully");
+			response.setDescription("Curriculum Section Content Saved Successfully");
 			response.setData("");
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (BusinessServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(ServiceResponseUtils.setHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-					ServiceConstants.DATA_RETRIEVAL_FAILED_MESSAGE, null), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ResponseEntity<HttpStatusResponse> updateCurriculumSection(
-			@RequestBody CurriculumSection curriculumSection) {
+	public ResponseEntity<HttpStatusResponse> updateCurriculumSectionContent(
+			@RequestBody CurriculumSectionContent curriculumSectionContent) {
 		HttpStatusResponse response = new HttpStatusResponse();
 		try {
-			curriculumSectionService.doUpdateCurriculumSection(curriculumSection);
+			curriculumSectionContentService.doUpdateCurriculumSectionContent(curriculumSectionContent);
 			response.setStatusCode(HttpStatus.OK.value());
-			response.setDescription("Curriculum Section updated Successfully");
+			response.setDescription("Curriculum Section Content updated Successfully");
 			response.setData("");
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (BusinessServiceException e) {
@@ -111,16 +105,16 @@ public class CurriculumSectionController {
 	}
 
 	@RequestMapping(value = "/{id}/display-order/{dis-order}", method = RequestMethod.PUT)
-	public ResponseEntity<HttpStatusResponse> updateCurriculumSectionDisplayOrder(@PathVariable("id") Long id,
+	public ResponseEntity<HttpStatusResponse> updateCurriculumSectionContentDisplayOrder(@PathVariable("id") Long id,
 			@PathVariable("dis-order") Integer displayOrder) {
 		HttpStatusResponse response = new HttpStatusResponse();
 		try {
-			CurriculumSection curriculumSection = new CurriculumSection();
-			curriculumSection.setId(id);
-			curriculumSection.setDisplayOrder(displayOrder);
-			curriculumSectionService.doUpdateCurriculumSectionDisplayOrder(curriculumSection);
+			CurriculumSectionContent curriculumSectionContent = new CurriculumSectionContent();
+			curriculumSectionContent.setId(id);
+			curriculumSectionContent.setDisplayOrder(displayOrder);
+			curriculumSectionContentService.doUpdateCurriculumSectionContentDisplayOrder(curriculumSectionContent);
 			response.setStatusCode(HttpStatus.OK.value());
-			response.setDescription("Curriculum Section Display Order updated Successfully");
+			response.setDescription("Curriculum Section Content Display Order updated Successfully");
 			response.setData("");
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (BusinessServiceException e) {
@@ -133,11 +127,11 @@ public class CurriculumSectionController {
 	public ResponseEntity<HttpStatusResponse> deleteCurriculumSection(@PathVariable("id") Long id) {
 		HttpStatusResponse response = new HttpStatusResponse();
 		try {
-			CurriculumSection curriculumSection = new CurriculumSection();
-			curriculumSection.setId(id);
-			curriculumSectionService.doDeleteCurriculumSection(curriculumSection);
+			CurriculumSectionContent curriculumSectionContent = new CurriculumSectionContent();
+			curriculumSectionContent.setId(id);
+			curriculumSectionContentService.doDeleteCurriculumSectionContent(curriculumSectionContent);
 			response.setStatusCode(HttpStatus.OK.value());
-			response.setDescription("Curriculum Section Deleted Successfully");
+			response.setDescription("Curriculum Section Content Deleted Successfully");
 			response.setData("");
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (BusinessServiceException e) {
@@ -145,5 +139,4 @@ public class CurriculumSectionController {
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }

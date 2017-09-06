@@ -15,6 +15,7 @@ import com.revature.data.access.exception.DataAccessException;
 import com.revature.data.access.exception.DuplicateRecordException;
 import com.revature.data.exception.DataServiceException;
 import com.revature.models.CurriculumSection;
+import com.revature.vo.CurriculumSectionVO;
 
 @Repository
 public class CurriculumSectionDAOImpl implements CurriculumSectionDAO {
@@ -26,50 +27,60 @@ public class CurriculumSectionDAOImpl implements CurriculumSectionDAO {
 	private static final Logger LOG = Logger.getLogger(CurriculumSectionDAOImpl.class);
 
 	@Override
-	public List<CurriculumSection> doGetAllCurriculumSections() throws DataServiceException {
-		List<CurriculumSection> curriculumSections = new ArrayList<>();
+	public List<CurriculumSectionVO> doGetAllCurriculumSections() throws DataServiceException {
+		List<CurriculumSectionVO> curriculumSectionVOs = new ArrayList<>();
 		try {
+			StringBuilder query = new StringBuilder(
+					"SELECT cs.id id,cs.title title,cs.display_order displayOrder,c.id curriculumId,c.title curriculumTitle FROM curriculum_sections cs join curriculums c ON cs.curriculum_id = c.id ");
 			LOG.debug("Preparing query for execution");
-			curriculumSections = dataRetriever.retrieveByHQL("from CurriculumSection ");
+			curriculumSectionVOs = dataRetriever.retrieveBySQLResultTransformer(query.toString(),
+					CurriculumSectionVO.class);
 			LOG.debug("Query execution success");
 		} catch (DataAccessException e) {
 			LOG.error(e.getMessage(), e);
 			throw new DataServiceException(e.getMessage(), e);
 		}
-		return curriculumSections;
+		return curriculumSectionVOs;
 	}
 
 	@Override
-	public List<CurriculumSection> doGetCurriculumSectionById(Long id) throws DataServiceException {
-		List<CurriculumSection> curriculumSections = new ArrayList<CurriculumSection>();
+	public List<CurriculumSectionVO> doGetCurriculumSectionById(Long id) throws DataServiceException {
+		List<CurriculumSectionVO> curriculumSectionVOs = new ArrayList<>();
 		try {
+			StringBuilder query = new StringBuilder(
+					"SELECT cs.id as id,cs.title as title,cs.display_order as displayOrder,c.id as curriculumId,c.title as curriculumTitle FROM curriculum_sections cs join curriculums c ON cs.curriculum_id = c.id ");
+			query.append(" where cs.id=:id");
 			LOG.debug("Preparing query for execution");
 			List<QueryParameter<?>> queryParam = new ArrayList<>();
 			queryParam.add(new QueryParameter<>("id", id));
-			curriculumSections = dataRetriever.retrieveByHQL("from CurriculumSection where id=:id", queryParam);
+			curriculumSectionVOs = dataRetriever.retrieveBySQLResultTransformer(query.toString(), queryParam,
+					CurriculumSectionVO.class);
 			LOG.debug("Query execution success");
 		} catch (DataAccessException e) {
 			LOG.error(e.getMessage(), e);
 			throw new DataServiceException(e.getMessage(), e);
 		}
-		return curriculumSections;
+		return curriculumSectionVOs;
 	}
 
 	@Override
-	public List<CurriculumSection> doGetCurriculumSectionByCurriculumId(Long curriculumId) throws DataServiceException {
-		List<CurriculumSection> curriculumSections = new ArrayList<CurriculumSection>();
+	public List<CurriculumSectionVO> doGetCurriculumSectionByCurriculumId(Long curriculumId) throws DataServiceException {
+		List<CurriculumSectionVO> curriculumSectionVOs = new ArrayList<>();
 		try {
+			StringBuilder query = new StringBuilder(
+					"SELECT cs.id as id,cs.title as title,cs.display_order as displayOrder,c.id as curriculumId,c.title as curriculumTitle FROM curriculum_sections cs join curriculums c ON cs.curriculum_id = c.id ");
+			query.append(" where c.id=:curriculumId");
 			LOG.debug("Preparing query for execution");
 			List<QueryParameter<?>> queryParam = new ArrayList<>();
 			queryParam.add(new QueryParameter<>("curriculumId", curriculumId));
-			curriculumSections = dataRetriever.retrieveByHQL(
-					"from CurriculumSection cs join fetch cs.curriculum c where c.id=:curriculumId", queryParam);
+			curriculumSectionVOs = dataRetriever.retrieveBySQLResultTransformer(query.toString(), queryParam,
+					CurriculumSectionVO.class);
 			LOG.debug("Query execution success");
 		} catch (DataAccessException e) {
 			LOG.error(e.getMessage(), e);
 			throw new DataServiceException(e.getMessage(), e);
 		}
-		return curriculumSections;
+		return curriculumSectionVOs;
 	}
 
 	@Override
@@ -90,6 +101,24 @@ public class CurriculumSectionDAOImpl implements CurriculumSectionDAO {
 	public void doUpdateCurriculumSection(CurriculumSection curriculumSection) throws DataServiceException {
 		try {
 			dataModifier.update(curriculumSection);
+			LOG.debug("Curriculum Section updated successfully");
+		} catch (DuplicateRecordException e) {
+			LOG.error(e.getMessage(), e);
+			throw new DataServiceException(e.getMessage(), e);
+		} catch (DataAccessException e) {
+			LOG.error(e.getMessage(), e);
+			throw new DataServiceException(e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public void doUpdateCurriculumSectionDisplayOrder(CurriculumSection curriculumSection) throws DataServiceException {
+		try {
+			String query = "UPDATE curriculum_sections cs SET cs.display_order=:displayOrder WHERE cs.id=:id";
+			List<QueryParameter<?>> queryParam = new ArrayList<>();
+			queryParam.add(new QueryParameter<>("id", curriculumSection.getId()));
+			queryParam.add(new QueryParameter<>("displayOrder", curriculumSection.getDisplayOrder()));
+			dataModifier.executeSQLQuery(query, queryParam);
 			LOG.debug("Curriculum Section updated successfully");
 		} catch (DuplicateRecordException e) {
 			LOG.error(e.getMessage(), e);

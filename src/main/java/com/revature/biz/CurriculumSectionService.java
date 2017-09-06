@@ -62,4 +62,12 @@ public interface CurriculumSectionService {
 	 */
 	void doDeleteCurriculumSection(CurriculumSection curriculumSection) throws BusinessServiceException;
 
+	/**
+	 * Updates the curriculum section display order based on id
+	 * 
+	 * @param curriculumSection
+	 * @throws BusinessServiceException
+	 */
+	void doUpdateCurriculumSectionDisplayOrder(CurriculumSection curriculumSection) throws BusinessServiceException;
+
 }
