@@ -3,9 +3,9 @@ package com.revature.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,11 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.revature.utils.JsonDateDeserializer24Hrs;
-import com.revature.utils.JsonDateSerializer24Hrs;
-import com.revature.utils.LocalDateAttributeConverter;
 
 /**
  * The persistent class for the modules database table.
@@ -33,7 +28,7 @@ public class Module implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID")
   private Long id;
 
@@ -76,11 +71,8 @@ public class Module implements Serializable {
   @JoinColumn(name = "CREATED_BY")
   private Employee createdBy;
 
-  @Convert(converter = LocalDateAttributeConverter.class)
-  @JsonSerialize(using = JsonDateSerializer24Hrs.class)
-  @JsonDeserialize(using = JsonDateDeserializer24Hrs.class)
   @Column(name = "CREATED_ON")
-  private LocalDateTime createdOn;
+  private Date createdOn;
 
   @Column(name = "parent_module_id")
   private Long parentModuleId;
@@ -196,15 +188,15 @@ public class Module implements Serializable {
     this.createdBy = createdBy;
   }
 
-  public LocalDateTime getCreatedOn() {
-    return createdOn;
-  }
+  public Date getCreatedOn() {
+	return createdOn;
+}
 
-  public void setCreatedOn(LocalDateTime createdOn) {
-    this.createdOn = createdOn;
-  }
+public void setCreatedOn(Date createdOn) {
+	this.createdOn = createdOn;
+}
 
-  public Long getParentModuleId() {
+public Long getParentModuleId() {
     return parentModuleId;
   }
 
