@@ -108,8 +108,8 @@ CREATE TABLE `curriculum_sections`(
 CREATE TABLE `curriculum_section_contents`(  
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `curriculum_sec_id` BIGINT(20) NOT NULL,
-  `module_id` BIGINT(20) NOT NULL,
-  `curriculum_act_id` BIGINT(20) NOT NULL,
+  `module_id` BIGINT(20) NULL,
+  `curriculum_act_id` BIGINT(20) NULL,
   `parent_curriculum_act_id` BIGINT(20),
   `display_order` INT(11),
   PRIMARY KEY (`id`),
