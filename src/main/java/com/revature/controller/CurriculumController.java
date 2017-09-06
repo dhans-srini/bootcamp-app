@@ -25,9 +25,9 @@ import com.revature.vo.HttpStatusResponse;
 
 @RestController
 @RequestMapping("/curriculums")
-public class CurriculamController {
+public class CurriculumController {
 
-  private static Logger log = Logger.getLogger(CurriculamController.class);
+  private static Logger log = Logger.getLogger(CurriculumController.class);
 
   @Autowired
   private CurriculumService curriculamService;
