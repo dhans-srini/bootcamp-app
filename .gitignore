@@ -1,6 +1,4 @@
 *.class
 build/
 target/
-bin/
 .gradle/
-.settings/

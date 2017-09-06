@@ -20,74 +20,74 @@ import javax.persistence.Table;
 @Table(name = "curriculum_sections")
 public class CurriculumSection implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID")
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Long id;
 
-  @Column(name = "title")
-  private String title;
+	@Column(name = "title")
+	private String title;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "curriculum_id")
-  private Curriculum curriculum;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "curriculum_id")
+	private Curriculum curriculum;
 
-  @Column(name = "display_order")
-  private Integer displayOrder;
+	@Column(name = "display_order")
+	private Integer displayOrder;
 
-  // ----------------------------- Constructor
-  public CurriculumSection() {
-    // No arg cons
-  }
+	// ----------------------------- Constructor
+	public CurriculumSection() {
+		// No arg cons
+	}
 
-  // ----------------------------------- Getter Setter
+	// ----------------------------------- Getter Setter
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public String getTitle() {
-    return title;
-  }
+	public String getTitle() {
+		return title;
+	}
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  public Curriculum getCurriculum() {
-    return curriculum;
-  }
+	public Curriculum getCurriculum() {
+		return curriculum;
+	}
 
-  public void setCurriculum(Curriculum curriculum) {
-    this.curriculum = curriculum;
-  }
+	public void setCurriculum(Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
 
-  public Integer getDisplayOrder() {
-    return displayOrder;
-  }
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
 
-  public void setDisplayOrder(Integer displayOrder) {
-    this.displayOrder = displayOrder;
-  }
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 
-  @Override
-  public int hashCode() {
-    return id != null ? id.intValue() : super.hashCode();
-  }
+	@Override
+	public int hashCode() {
+		return id != null ? id.intValue() : super.hashCode();
+	}
 
-  // ------------------- equals customized here [AVINASH]
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == null || !(obj instanceof CurriculumSection))
-      return false;
+	// ------------------- equals customized here [AVINASH]
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof CurriculumSection))
+			return false;
 
-    CurriculumSection that = (CurriculumSection) obj;
-    return this.id == null ? false : this.id.equals(that.getId());
-  }
+		CurriculumSection that = (CurriculumSection) obj;
+		return this.id == null ? false : this.id.equals(that.getId());
+	}
 }

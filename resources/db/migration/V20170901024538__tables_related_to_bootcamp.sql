@@ -1,5 +1,5 @@
 CREATE TABLE `modules`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `tags` VARCHAR(255) NOT NULL,
   `unique_key` VARCHAR(50),
@@ -21,7 +21,7 @@ CREATE TABLE `modules`(
 
 
 CREATE TABLE `curriculum_activities`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `type` VARCHAR(100) NOT NULL,
   `video_id` BIGINT(20),
@@ -41,7 +41,7 @@ CREATE TABLE `curriculum_activities`(
 
 
 CREATE TABLE `curriculum_act_refs`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(100) NOT NULL,
   `curriculum_act_id` BIGINT(20) NOT NULL,
   `uniq_name` VARCHAR(255),
@@ -57,7 +57,7 @@ CREATE TABLE `curriculum_act_refs`(
 
 
 CREATE TABLE `curriculum_act_req_artifacts`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `curriculum_act_id` BIGINT(20) NOT NULL,
   `allowed_file_types` VARCHAR(500),
@@ -68,7 +68,7 @@ CREATE TABLE `curriculum_act_req_artifacts`(
 
 
 CREATE TABLE `curriculum_module_activities`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `module_id` BIGINT(20) NOT NULL,
   `curriculum_act_id` BIGINT(20) NOT NULL,
   `parent_curriculum_act_id` BIGINT(20),
@@ -80,7 +80,7 @@ CREATE TABLE `curriculum_module_activities`(
 
 
 CREATE TABLE `curriculums`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `descriptions` LONGTEXT,
   `unique_key` VARCHAR(50),
@@ -96,7 +96,7 @@ CREATE TABLE `curriculums`(
 
 
 CREATE TABLE `curriculum_sections`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `curriculum_id` BIGINT(20) NOT NULL,
   `display_order` INT(11),
@@ -106,10 +106,10 @@ CREATE TABLE `curriculum_sections`(
 
 
 CREATE TABLE `curriculum_section_contents`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `curriculum_sec_id` BIGINT(20) NOT NULL,
-  `module_id` BIGINT(20) NOT NULL,
-  `curriculum_act_id` BIGINT(20) NOT NULL,
+  `module_id` BIGINT(20) NULL,
+  `curriculum_act_id` BIGINT(20) NULL,
   `parent_curriculum_act_id` BIGINT(20),
   `display_order` INT(11),
   PRIMARY KEY (`id`),
@@ -120,7 +120,7 @@ CREATE TABLE `curriculum_section_contents`(
 
 
 CREATE TABLE `curriculum_histories`(  
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `curriculum_id` BIGINT(20) NOT NULL,
   `updated_by` BIGINT(20) NOT NULL,
   `updated_on` DATETIME,
