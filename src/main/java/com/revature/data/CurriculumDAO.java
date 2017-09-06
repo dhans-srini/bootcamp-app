@@ -5,7 +5,7 @@ import java.util.List;
 import com.revature.data.exception.DataServiceException;
 import com.revature.vo.CurriculumVO;
 
-public interface CurriculamDAO {
+public interface CurriculumDAO {
   
   void saveCurriculam();
 

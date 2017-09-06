@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.revature.biz.CurriculumService;
 import com.revature.biz.exception.BusinessServiceException;
-import com.revature.data.CurriculamDAO;
+import com.revature.data.CurriculumDAO;
 import com.revature.data.exception.DataServiceException;
 import com.revature.vo.CurriculumVO;
 
@@ -19,7 +19,7 @@ public class CurriculumServiceImpl implements CurriculumService {
   private static Logger log = Logger.getLogger(CurriculumServiceImpl.class);
   
   @Autowired
-  private CurriculamDAO curriculamDAO;
+  private CurriculumDAO curriculamDAO;
 
   public void saveCurriculam() {
     curriculamDAO.saveCurriculam();
